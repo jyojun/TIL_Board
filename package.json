@@ -18,9 +18,15 @@
   },
   "homepage": "https://github.com/jyojun/TIL_Board#readme",
   "dependencies": {
+    "dompurify": "^2.3.6",
+    "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
-    "mongoose": "^6.2.4"
+    "jsdom": "^19.0.0",
+    "marked": "^4.0.12",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.2.4",
+    "slugify": "^1.6.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

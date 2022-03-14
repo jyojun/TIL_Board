@@ -1,34 +1,25 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const Article = require('./models/article')
+require('dotenv').config(); 
 const articleRouter = require('./routes/articles')
+const methodOverride = require('method-override')
 const app = express()
 
-mongoose.connect('mongodb://localhost/blog', {
+mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: false,})
+    useUnifiedTopology: true,})
     .then(() => console.log("Database connected"))
     .catch(err => console.log(err));
 
 app.set('view engine', 'ejs')
-
 app.use(express.urlencoded({ extended: false })) // 중첩된 객체표현을 끈다
+app.use(methodOverride('_method'))
 
-app.get('/', (req, res) => {
-    const articles = [{
-        title: 'Test Article',
-        createdAt: new Date(),
-        description: 'Test description'
-    },
-    {
-        title: 'Test Article 2',
-        createdAt: new Date(),
-        description: 'Test description 2'
-    },
-    {
-        title: 'Test Article 3',
-        createdAt: new Date(),
-        description: 'Test description 3'
-    }]
+app.get('/', async (req, res) => {
+    const articles = await Article.find().sort({
+        createdAt: "desc", // 최신 날짜 순으로 정렬
+    }) 
     res.render('articles/index', { articles: articles })
 })
 
